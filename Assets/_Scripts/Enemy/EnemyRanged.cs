@@ -20,11 +20,11 @@ public class EnemyRanged : Enemy {
         //target = auto_target(robot, "ranged");
         if(UI.S.together)
         {
-
+            this.transform.LookAt(Whole.S.transform.position);
         }
         else
         {
-            this.transform.LookAt(Top.S.container.transform.position);
+            this.transform.LookAt(Bottom.S.container.transform.position);
         }
 	}
 

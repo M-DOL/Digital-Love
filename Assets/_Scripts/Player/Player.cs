@@ -22,6 +22,7 @@ public class Player : MonoBehaviour {
     protected void SplitOrCombine()
     {
         UI.S.together = !UI.S.together;
+        UI.S.PlaySound("Jump");
         //Split
         if (!UI.S.together)
         {

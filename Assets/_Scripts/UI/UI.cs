@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class UI : MonoBehaviour {
     public static UI S;
@@ -9,6 +10,11 @@ public class UI : MonoBehaviour {
     public GameObject FullHealth;
     public GameObject TopHealth;
     public GameObject BottomHealth;
+    int star = 0;
+    public Image star1;
+    public Image star2;
+    public Image star3;
+    public AudioSource sound;
     void Awake()
     {
         S = this;
@@ -16,6 +22,7 @@ public class UI : MonoBehaviour {
     // Use this for initialization
     void Start ()
     {
+        sound = Camera.main.GetComponent<AudioSource>();
         lastTopHealth = Top.S.health;
         lastBottomHealth = Top.S.health;
         lastFullHealth = Top.S.health;
@@ -24,18 +31,18 @@ public class UI : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-        if(together)
+        if(!together)
         {
             if (Top.S.health != lastTopHealth)
             {
                 Vector2 topSize = TopHealth.GetComponent<RectTransform>().sizeDelta;
-                topSize.x = Top.S.health / Top.S.maxHealth * 150f;
+                topSize.x = (Top.S.health / Top.S.maxHealth) * 150f;
                 TopHealth.GetComponent<RectTransform>().sizeDelta = topSize;
             }
             if (Bottom.S.health != lastBottomHealth)
             {
                 Vector2 bottomSize = BottomHealth.GetComponent<RectTransform>().sizeDelta;
-                bottomSize.x = Bottom.S.health / Bottom.S.maxHealth * 150f;
+                bottomSize.x = (Bottom.S.health / Bottom.S.maxHealth) * 150f;
                 BottomHealth.GetComponent<RectTransform>().sizeDelta = bottomSize;
             }
         }
@@ -44,10 +51,13 @@ public class UI : MonoBehaviour {
             if (fullHealth != lastFullHealth)
             {
                 Vector2 fullSize = FullHealth.GetComponent<RectTransform>().sizeDelta;
-                fullSize.x = fullHealth / fullMaxHealth * 150f;
+                fullSize.x = (fullHealth / fullMaxHealth) * 150f;
                 FullHealth.GetComponent<RectTransform>().sizeDelta = fullSize;
             }
         }
+        lastBottomHealth = Bottom.S.health;
+        lastTopHealth = Top.S.health;
+        lastFullHealth = fullHealth;
     }
     public void Switch()
     {
@@ -67,5 +77,25 @@ public class UI : MonoBehaviour {
             TopHealth.SetActive(true);
             BottomHealth.SetActive(true);
         }
+    }
+    public void Collect()
+    {
+        if(star == 0)
+        {
+            star1.color = Color.white;
+        }
+        else if(star == 1)
+        {
+            star2.color = Color.white;
+        }
+        else
+        {
+            star3.color = Color.white;
+        }
+        PlaySound("Success");
+    }
+    public void PlaySound(string name)
+    {
+        sound.PlayOneShot(Resources.Load("Sounds/" + name) as AudioClip);
     }
 }

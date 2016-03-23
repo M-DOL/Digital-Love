@@ -39,6 +39,7 @@ public class Pickup : MonoBehaviour {
             {
                 //TODO: Play Pickup Sound
                 //IncPickup
+                UI.S.Collect();
             }
             Destroy(gameObject);
         }

@@ -24,7 +24,6 @@ public class Top : Player
 	void Update ()
     {
         //Animation Parameters set
-
         if (Mathf.Abs(rigid.velocity.x) > .01f)
         {
             anim.SetBool("walking", true);
@@ -49,6 +48,7 @@ public class Top : Player
         {
             jump = true;
             anim.SetBool("jumping", true);
+            UI.S.PlaySound("Jump");
         }
         else if(Input.GetKeyUp(KeyCode.W) && !grounded)
         {
@@ -59,6 +59,7 @@ public class Top : Player
             anim.SetBool("attacking", true);
             attacking = true;
             attackStart = Time.time;
+            UI.S.PlaySound("Punch");
             //ATTACK
         }
         else if(attacking && Time.time > attackStart + attackDur)
